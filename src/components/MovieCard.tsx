@@ -10,7 +10,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const navigate = useNavigate();
 
   const handleFunctionClick = (funcTime: string) => {
-    navigate(`/movie/${movie.id}/function/${funcTime}`);
+    navigate(`/purchase/${movie.id}/${funcTime}/${movie.dia}`);
   };
 
   return (
@@ -21,6 +21,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         <p className="text-gray-300 mt-2">{movie.synopsis}</p>
         <p className="text-gray-400 mt-2"><strong>Género:</strong> {movie.genre}</p>
         <p className="text-gray-400"><strong>Duración:</strong> {movie.duration}</p>
+        <p className="text-gray-400"><strong>Día:</strong> {movie.dia}</p>
         <div className="mt-4 flex space-x-2">
           {movie.functions.map((funcTime, index) => (
             <button 

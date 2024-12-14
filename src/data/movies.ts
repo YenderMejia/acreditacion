@@ -8,6 +8,7 @@ export const movies: Movie[] = [
     genre: "Sci-Fi, Action",
     duration: "2h 28m",
     image: "/images/disne.jpg", // Asegúrate de tener estas imágenes en public/images/
+    dia: "Lunes 16",
     functions: ["14:00", "17:00", "20:00"],
   },
   {
@@ -17,6 +18,7 @@ export const movies: Movie[] = [
     genre: "Sci-Fi, Action",
     duration: "2h 16m",
     image: "/images/incen.jpg",
+    dia: "Martes 17",
     functions: ["13:00", "16:00", "19:00"],
   },
   // Añade más películas según necesites

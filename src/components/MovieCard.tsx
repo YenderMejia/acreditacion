@@ -1,16 +1,16 @@
 import React from 'react';
-import { Movie } from '../types/movie';
 import { useNavigate } from 'react-router-dom';
+import { Movie } from '../types/movie';
 
 interface MovieCardProps {
-  movie: Movie;
+  movie: Movie; // Recibe una sola película
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const navigate = useNavigate();
 
-  const handleFunctionClick = (funcTime: string) => {
-    navigate(`/purchase/${movie.id}/${funcTime}/${movie.dia}`);
+  const handleDayClick = (movieId: number, day: string) => {
+    navigate(`/purchase/${movieId}/${day}`);
   };
 
   return (
@@ -21,15 +21,15 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         <p className="text-gray-300 mt-2">{movie.synopsis}</p>
         <p className="text-gray-400 mt-2"><strong>Género:</strong> {movie.genre}</p>
         <p className="text-gray-400"><strong>Duración:</strong> {movie.duration}</p>
-        <p className="text-gray-400"><strong>Día:</strong> {movie.dia}</p>
-        <div className="mt-4 flex space-x-2">
-          {movie.functions.map((funcTime, index) => (
-            <button 
-              key={index}
-              onClick={() => handleFunctionClick(funcTime)}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded transition duration-300"
+        <div className="mt-4">
+          {/* Itera sobre los días disponibles de esa película */}
+          {movie.availableDays.map((day) => (
+            <button
+              key={day}
+              onClick={() => handleDayClick(movie.id, day)}
+              className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
             >
-              {funcTime}
+              {day}
             </button>
           ))}
         </div>

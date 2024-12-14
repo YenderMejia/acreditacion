@@ -7,8 +7,8 @@ export const movies: Movie[] = [
     synopsis: "A thief who steals corporate secrets through the use of dream-sharing technology...",
     genre: "Sci-Fi, Action",
     duration: "2h 28m",
-    image: "/images/disne.jpg", // Asegúrate de tener estas imágenes en public/images/
-    dia: "Lunes 16",
+    image: "/images/disne.jpg",
+    availableDays: ["Lunes", "Martes", "Miércoles"],
     functions: ["14:00", "17:00", "20:00"],
   },
   {
@@ -18,8 +18,7 @@ export const movies: Movie[] = [
     genre: "Sci-Fi, Action",
     duration: "2h 16m",
     image: "/images/incen.jpg",
-    dia: "Martes 17",
+    availableDays: ["Jueves", "Viernes", "Sábado"],
     functions: ["13:00", "16:00", "19:00"],
   },
-  // Añade más películas según necesites
 ];

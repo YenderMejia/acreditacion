@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Movie } from '../types/movie';
+import { movies } from '../data/movies';
 
 const PurchaseTicket: React.FC = () => {
-  const { movieId } = useParams<{ movieId: string }>();
+    const { movieId, day } = useParams<{ movieId: string; day: string }>();
+    const movieDetails = movies.find((movie) => movie.id === Number(movieId));
 
-  // Datos simulados de la película para ilustración
-  const movieDetails: Movie = {
-    id: Number(movieId),
-    title: 'Película Seleccionada',
-    image: 'https://via.placeholder.com/300x400',
-    synopsis: 'Descripción completa de la película seleccionada.',
-    genre: 'Acción',
-    duration: '120 min',
-    dia: 'Miércoles',
-    functions: ["14:00", "17:00", "20:00"],
-  };
-
+  // Define los hooks fuera de cualquier condicional
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [numTickets, setNumTickets] = useState<number>(1);
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+
+  // Si no se encuentra la película, muestra un mensaje de error
+  if (!movieDetails) {
+    return <div className="text-white text-center">Película no encontrada.</div>;
+  }
 
   const handleSeatSelect = (seat: number) => {
     if (selectedSeats.includes(seat)) {
@@ -60,7 +55,7 @@ const PurchaseTicket: React.FC = () => {
               <strong>Duración:</strong> {movieDetails.duration}
             </p>
             <p className="text-gray-400">
-              <strong>Día:</strong> {movieDetails.dia}
+            <strong>Día seleccionado:</strong> {day}
             </p>
           </div>
         </div>

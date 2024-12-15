@@ -24,7 +24,7 @@ const Login: React.FC = () => {
             type="submit" 
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
           >
-            <a href='/admin'>Iniciar Sesión</a>
+            <a href='/employee'>Iniciar Sesión</a>
           </button>
         </form>
         <p className="text-gray-400 mt-4">

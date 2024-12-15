@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import PurchaseTicket from './pages/PurchaseTicket';
+import EmployeeDashboard from './pages/EmployeeDashboard';// eslint-disable-next-line
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/purchase/:movieId/:day" element={<PurchaseTicket />} />
+        <Route path="/employee" element={<EmployeeDashboard />} />
       </Routes>
     </Router>
   );

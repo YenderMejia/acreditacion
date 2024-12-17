@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 interface Ticket {
   code: string;
-  movie: string;
-  date: string;
-  time: string;
-  seats: number[];
-  customer: string;
+  movie_title: string;
+  room_name: string;
+  seat_numbers: string[];
 }
 
 const EmployeeDashboard: React.FC = () => {
@@ -16,39 +15,31 @@ const EmployeeDashboard: React.FC = () => {
   const [ticketInfo, setTicketInfo] = useState<Ticket | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Simulación de base de datos de tickets
-  const tickets: Ticket[] = [
-    {
-      code: '123ABC',
-      movie: 'Inception',
-      date: '2024-12-15',
-      time: '18:00',
-      seats: [5, 6, 7],
-      customer: 'John Doe',
-    },
-    {
-      code: '456DEF',
-      movie: 'The Matrix',
-      date: '2024-12-16',
-      time: '20:00',
-      seats: [10, 11],
-      customer: 'Jane Smith',
-    },
-  ];
+  // Obtener el token y el nombre del comprador desde localStorage
+  const token = localStorage.getItem('token');
+  const buyerName = localStorage.getItem('user_name'); // Nombre del comprador
 
-  const handleSearch = () => {
-    const ticket = tickets.find((t) => t.code === ticketCode.trim().toUpperCase());
-    if (ticket) {
-      setTicketInfo(ticket);
-      setError(null);
-    } else {
-      setTicketInfo(null);
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `https://proyectoweb2-production.up.railway.app/api/tickets/codigo/${ticketCode.trim()}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`  // Agregar token en las cabeceras
+          }
+        }
+      );
+      setTicketInfo(response.data);  // Establecer la información del ticket
+      setError(null);  // Limpiar cualquier error previo
+    } catch (err) {
+      setTicketInfo(null);  // Limpiar la información del ticket
       setError('No se encontró información para el código ingresado.');
     }
   };
 
   const handleLogout = () => {
-    navigate('/');
+    localStorage.removeItem('token');
+    navigate('/');  // Redirigir al inicio
   };
 
   return (
@@ -67,6 +58,14 @@ const EmployeeDashboard: React.FC = () => {
       {/* Contenido principal */}
       <div className="flex-1 bg-gray-900 p-6">
         <h2 className="text-2xl font-bold text-white mb-4">Validación de Tickets</h2>
+        
+        {/* Mostrar el nombre del comprador */}
+        {buyerName && (
+          <p className="text-white mb-6">
+            <strong>Comprador:</strong> {buyerName}
+          </p>
+        )}
+        
         <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
           <label htmlFor="ticketCode" className="text-white mb-2 block">
             Código del Ticket:
@@ -92,19 +91,13 @@ const EmployeeDashboard: React.FC = () => {
           <div className="bg-gray-800 p-4 rounded-lg shadow-lg mt-6">
             <h3 className="text-xl font-bold text-white mb-4">Información del Ticket</h3>
             <p className="text-gray-300">
-              <strong>Cliente:</strong> {ticketInfo.customer}
+              <strong>Película:</strong> {ticketInfo.movie_title}
             </p>
             <p className="text-gray-300">
-              <strong>Película:</strong> {ticketInfo.movie}
+              <strong>Sala:</strong> {ticketInfo.room_name}
             </p>
             <p className="text-gray-300">
-              <strong>Fecha:</strong> {ticketInfo.date}
-            </p>
-            <p className="text-gray-300">
-              <strong>Hora:</strong> {ticketInfo.time}
-            </p>
-            <p className="text-gray-300">
-              <strong>Asientos:</strong> {ticketInfo.seats.join(', ')}
+              <strong>Asientos:</strong> {ticketInfo.seat_numbers.join(', ')}
             </p>
           </div>
         )}
